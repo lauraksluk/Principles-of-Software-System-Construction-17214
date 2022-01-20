@@ -1,0 +1,17 @@
+{
+  "name": "tictactoe",
+  "description": "...",
+  "version": "0.1.0",
+  "license": "GPLv3",
+  "devDependencies": {
+    "browserify": "^17.0.0",
+    "tsify": "^5.0.4",
+    "typescript": "^4.4.3",
+    "watchify": "^4.0.0"
+  },
+  "scripts": {
+    "compile": "tsc",
+    "deploy": "browserify src/gui.ts -p [ tsify --noImplicitAny ] -o dist/tic.js",
+    "watchify": "watchify src/gui.ts -p [ tsify --noImplicitAny ] -d -v -o dist/tic.js"
+  }
+}
