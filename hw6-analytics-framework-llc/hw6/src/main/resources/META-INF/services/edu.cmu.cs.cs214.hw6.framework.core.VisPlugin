@@ -1,0 +1,7 @@
+# List of plugins to be registered by framework.
+# Provide fully qualified class names here ( edu.cmu.cs.cs214.rec10.plugin.XXX ),
+# with one plugin per line.
+
+edu.cmu.cs.cs214.hw6.plugins.visPlugin.PiePlugin
+edu.cmu.cs.cs214.hw6.plugins.visPlugin.MapPlugin
+edu.cmu.cs.cs214.hw6.plugins.visPlugin.PlotPlugin
