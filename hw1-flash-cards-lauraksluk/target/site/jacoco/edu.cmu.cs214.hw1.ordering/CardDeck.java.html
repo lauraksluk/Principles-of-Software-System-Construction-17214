@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CardDeck.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FlashCards</a> &gt; <a href="index.source.html" class="el_package">edu.cmu.cs214.hw1.ordering</a> &gt; <span class="el_source">CardDeck.java</span></div><h1>CardDeck.java</h1><pre class="source lang-java linenums">package edu.cmu.cs214.hw1.ordering;
+
+import edu.cmu.cs214.hw1.cards.CardStatus;
+import edu.cmu.cs214.hw1.cards.FlashCard;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+
+/**
+ * A card deck represents a set of cards in a specific order with associated state and a mechanism to filter and reorder
+ * them.
+ */
+<span class="pc bpc" id="L15" title="1 of 2 branches missed.">public class CardDeck {</span>
+
+    private final CardOrganizer cardOrganizer;
+    private List&lt;CardStatus&gt; cards;
+
+    /**
+     * Initializes a new {@link CardDeck} instance.
+     *
+     * @param cards         The {@link FlashCard} cards to store in this deck, to be paired with a status into
+     *                      a {@link CardStatus}.
+     * @param cardOrganizer The (potentially composite) {@link CardOrganizer} instance to sort and filter the cards with
+     *                      based on the correctness of responses.
+     */
+<span class="fc" id="L28">    public CardDeck(Collection&lt;FlashCard&gt; cards, CardOrganizer cardOrganizer) {</span>
+<span class="pc bpc" id="L29" title="2 of 4 branches missed.">        assert cardOrganizer != null;</span>
+<span class="fc" id="L30">        this.cardOrganizer = cardOrganizer;</span>
+<span class="fc" id="L31">        this.cards = cards.stream().map(CardStatus::new).collect(Collectors.toList());</span>
+<span class="fc" id="L32">    }</span>
+
+    /**
+     * Retrieves the remaining stored cards.
+     *
+     * @return The {@link CardStatus} cards in this deck.
+     */
+    public List&lt;CardStatus&gt; getCards() {
+<span class="fc" id="L40">        return this.cards;</span>
+    }
+
+    /**
+     * Retrieves the associated card organizer.
+     *
+     * @return The {@link CardOrganizer} used to sort this deck.
+     */
+    public CardOrganizer getCardSorter() {
+<span class="nc" id="L49">        return this.cardOrganizer;</span>
+    }
+
+    /**
+     * A helper method, that calls {@link CardOrganizer#reorganize(List)} with the global cards field and overwrites
+     * it with the result.
+     *
+     * @return The final, filtered and ordered list of cards.
+     */
+    public List&lt;CardStatus&gt; reorganize() {
+<span class="fc" id="L59">        this.cards = cardOrganizer.reorganize(this.cards);</span>
+<span class="fc" id="L60">        return this.cards;</span>
+    }
+
+    /**
+     * Checks whether any more cards need to be tested.
+     *
+     * @return {@code true} if all cards have been filtered.
+     */
+    public boolean isComplete() {
+<span class="fc" id="L69">        return this.cards.isEmpty();</span>
+    }
+
+    /**
+     * Gets the size of the remaining cards in this deck.
+     *
+     * @return The number of cards in this deck.
+     */
+    public int countCards() {
+<span class="fc" id="L78">        return cards.size();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

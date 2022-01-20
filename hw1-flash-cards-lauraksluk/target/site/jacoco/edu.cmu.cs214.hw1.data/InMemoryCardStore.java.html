@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InMemoryCardStore.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FlashCards</a> &gt; <a href="index.source.html" class="el_package">edu.cmu.cs214.hw1.data</a> &gt; <span class="el_source">InMemoryCardStore.java</span></div><h1>InMemoryCardStore.java</h1><pre class="source lang-java linenums">package edu.cmu.cs214.hw1.data;
+
+import edu.cmu.cs214.hw1.cards.FlashCard;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+/**
+ * Implements a card store in working memory, based on a {@link HashSet}. The data is initialized with a pre-populated
+ * set of default cards.
+ */
+public final class InMemoryCardStore implements CardStore {
+
+
+    private final Set&lt;FlashCard&gt; cards;
+
+    /**
+     * Initializes a new {@link InMemoryCardStore} instance, which contains the provided cards
+     *
+     * @param initialCards Provided cards
+     */
+<span class="fc" id="L24">    public InMemoryCardStore(Collection&lt;FlashCard&gt; initialCards) {</span>
+<span class="fc" id="L25">        cards = new HashSet&lt;&gt;(initialCards);</span>
+<span class="fc" id="L26">    }</span>
+
+    /**
+     * Initializes a new empty {@link InMemoryCardStore} instance.
+     */
+<span class="fc" id="L31">    public InMemoryCardStore() {</span>
+<span class="fc" id="L32">        cards = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L33">    }</span>
+
+    /**
+     * Creates and returns a new {@link InMemoryCardStore} where question and answer are swapped on all cards
+     *
+     * @return The new, reversed {@link InMemoryCardStore}.
+     */
+    public InMemoryCardStore invertQuestions() {
+<span class="fc" id="L41">        var newCards = cards.stream().map(c -&gt; new FlashCard(c.answer(), c.question())).collect(Collectors.toSet());</span>
+<span class="fc" id="L42">        return new InMemoryCardStore(newCards);</span>
+    }
+
+    @Override
+    public Collection&lt;FlashCard&gt; getAllCards() {
+<span class="fc" id="L47">        return this.cards;</span>
+    }
+
+    @Override
+    public boolean addCard(FlashCard card) {
+<span class="fc" id="L52">        return this.cards.add(card);</span>
+    }
+
+    @Override
+    public boolean removeCard(FlashCard card) {
+<span class="fc" id="L57">        return this.cards.remove(card);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

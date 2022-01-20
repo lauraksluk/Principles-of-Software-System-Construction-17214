@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RecentMistakesFirstSorter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FlashCards</a> &gt; <a href="index.source.html" class="el_package">edu.cmu.cs214.hw1.ordering.prioritization</a> &gt; <span class="el_source">RecentMistakesFirstSorter.java</span></div><h1>RecentMistakesFirstSorter.java</h1><pre class="source lang-java linenums">package edu.cmu.cs214.hw1.ordering.prioritization;
+import edu.cmu.cs214.hw1.cards.CardStatus;
+import edu.cmu.cs214.hw1.ordering.CardOrganizer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="fc" id="L8">public class RecentMistakesFirstSorter implements CardOrganizer {</span>
+    /**
+     * Orders the provided cards such that the ones that were answered incorrectly
+     * in the last round appear first. Reordering is stable.
+     *
+     * @param cards The {@link CardStatus} objects to order.
+     * @return The provided cards, sorted.
+     */
+    @Override
+    public List&lt;CardStatus&gt; reorganize(List&lt;CardStatus&gt; cards) {
+<span class="fc" id="L18">        List&lt;CardStatus&gt; incorrect = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        for (int i = 0; i &lt; cards.size(); i++) {</span>
+<span class="fc" id="L21">            List&lt;Boolean&gt; success = cards.get(i).getResults();</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">            if (success.size() &gt; 0) {</span>
+<span class="fc" id="L23">                Boolean correct = success.get(success.size() - 1);</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">                if (!correct) {</span>
+<span class="fc" id="L25">                    incorrect.add(cards.get(i));</span>
+                }
+            }
+        }
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        for (int k = incorrect.size() - 1; k &gt;= 0; k--) {</span>
+<span class="fc" id="L30">            cards.remove(incorrect.get(k));</span>
+<span class="fc" id="L31">            cards.add(0, incorrect.get(k));</span>
+        }
+
+<span class="fc" id="L34">        return cards;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

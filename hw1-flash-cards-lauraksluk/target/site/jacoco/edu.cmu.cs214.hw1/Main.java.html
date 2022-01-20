@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FlashCards</a> &gt; <a href="index.source.html" class="el_package">edu.cmu.cs214.hw1</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">package edu.cmu.cs214.hw1;
+
+import edu.cmu.cs214.hw1.cli.UI;
+import edu.cmu.cs214.hw1.data.CardLoader;
+import edu.cmu.cs214.hw1.data.CardStore;
+import edu.cmu.cs214.hw1.ordering.CardDeck;
+import edu.cmu.cs214.hw1.ordering.prioritization.CardShuffler;
+
+import java.io.File;
+import java.io.IOException;
+
+public final class Main {
+
+<span class="nc" id="L14">    private Main() {</span>
+        // Disable instantiating this class.
+<span class="nc" id="L16">        throw new UnsupportedOperationException();</span>
+    }
+
+    public static void main(String[] args) throws IOException {
+
+<span class="nc" id="L21">        CardStore cards = new CardLoader().loadCardsFromFile(new File(&quot;cards/designpatterns.csv&quot;));</span>
+<span class="nc" id="L22">        CardDeck cardDeck = new CardDeck(cards.getAllCards(), new CardShuffler());</span>
+<span class="nc" id="L23">        new UI().studyCards(cardDeck);</span>
+<span class="nc" id="L24">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

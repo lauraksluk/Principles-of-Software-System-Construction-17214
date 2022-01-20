@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FlashCards</a> &gt; <a href="index.source.html" class="el_package">edu.cmu.cs214.hw1.cli</a> &gt; <span class="el_source">UI.java</span></div><h1>UI.java</h1><pre class="source lang-java linenums">package edu.cmu.cs214.hw1.cli;
+
+import edu.cmu.cs214.hw1.cards.CardStatus;
+import edu.cmu.cs214.hw1.cards.FlashCard;
+import edu.cmu.cs214.hw1.gamification.AchievementHandler;
+import edu.cmu.cs214.hw1.ordering.CardDeck;
+
+import java.util.List;
+import java.util.Scanner;
+
+<span class="nc" id="L11">public class UI {</span>
+
+
+    /**
+     * Prompts the user with {@link FlashCard} cards until the {@link CardDeck} is exhausted.
+     *
+     * @param cardProducer The {@link CardDeck} to use for organizing cards.
+     */
+    public void studyCards(CardDeck cardProducer) {
+<span class="nc" id="L20">        AchievementHandler handler = new AchievementHandler();</span>
+<span class="nc" id="L21">        try (Scanner sc = new Scanner(System.in)) {</span>
+<span class="nc bnc" id="L22" title="All 2 branches missed.">            while (!cardProducer.isComplete()) {</span>
+<span class="nc" id="L23">                cueAllCards(cardProducer, sc);</span>
+<span class="nc" id="L24">                List&lt;String&gt; all = handler.getNewAchievements(cardProducer.getCards());</span>
+<span class="nc bnc" id="L25" title="All 2 branches missed.">                for (String s : all) {</span>
+<span class="nc" id="L26">                    System.out.println(&quot;** New achievement unlocked: &quot; + s);</span>
+<span class="nc" id="L27">                }</span>
+<span class="nc" id="L28">                cardProducer.reorganize();</span>
+<span class="nc" id="L29">                System.out.println(&quot;Pass completed; &quot; + cardProducer.countCards() + &quot; cards left.&quot;);</span>
+<span class="nc" id="L30">            }</span>
+<span class="nc" id="L31">            System.out.println(&quot;Great job, you have studied all the cards!&quot;);</span>
+        }
+<span class="nc" id="L33">    }</span>
+
+    private void cueAllCards(CardDeck cardProducer, Scanner sc) {
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        for (CardStatus cardStatus : cardProducer.getCards()) {</span>
+<span class="nc" id="L37">            FlashCard card = cardStatus.getCard();</span>
+<span class="nc" id="L38">            boolean success = cueCard(card, sc);</span>
+<span class="nc" id="L39">            cardStatus.recordResult(success);</span>
+<span class="nc" id="L40">        }</span>
+<span class="nc" id="L41">    }</span>
+
+    private boolean cueCard(FlashCard card, Scanner sc) {
+<span class="nc" id="L44">        System.out.println(&quot;Next cue: &quot; + card.question());</span>
+<span class="nc" id="L45">        var response = sc.nextLine().trim();</span>
+<span class="nc" id="L46">        var success = card.checkSuccess(response);</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        if (success) {</span>
+<span class="nc" id="L48">            System.out.println(&quot;That's correct!&quot;);</span>
+        } else {
+<span class="nc" id="L50">            System.out.println(&quot;That is incorrect; the correct response was: &quot;</span>
+<span class="nc" id="L51">                    + card.answer());</span>
+        }
+<span class="nc" id="L53">        return success;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

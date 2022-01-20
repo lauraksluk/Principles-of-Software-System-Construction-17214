@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CardStatus.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FlashCards</a> &gt; <a href="index.source.html" class="el_package">edu.cmu.cs214.hw1.cards</a> &gt; <span class="el_source">CardStatus.java</span></div><h1>CardStatus.java</h1><pre class="source lang-java linenums">package edu.cmu.cs214.hw1.cards;
+
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+public class CardStatus {
+    private final FlashCard card;
+    private final List&lt;Boolean&gt; successes;
+
+    /**
+     * Creates a new {@link CardStatus} instance.
+     *
+     * @param card The {@link FlashCard} card to track answer correctness for.
+     */
+<span class="fc" id="L16">    public CardStatus(FlashCard card) {</span>
+<span class="fc" id="L17">        this.card = card;</span>
+<span class="fc" id="L18">        this.successes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L19">    }</span>
+
+    /**
+     * Retrieves the {@link edu.cmu.cs214.hw1.cards.FlashCard} associated with this {@code CardStatus}.
+     *
+     * @return The associated {@link edu.cmu.cs214.hw1.cards.FlashCard}.
+     */
+    public FlashCard getCard() {
+<span class="fc" id="L27">        return card;</span>
+    }
+
+    /**
+     * Retrieves the record of past successes at answering this card.
+     *
+     * @return A list of boolean's indicating the recorded outcome of previous attempts to answer this card.
+     */
+    public List&lt;Boolean&gt; getResults() {
+<span class="fc" id="L36">        return this.successes;</span>
+    }
+
+    /**
+     * Updates the internal success tracker with a new answering outcome.
+     *
+     * @param success {@code true} if this card was answered correctly.
+     */
+    public void recordResult(boolean success) {
+<span class="fc" id="L45">        this.successes.add(success);</span>
+<span class="fc" id="L46">    }</span>
+
+    /**
+     * Resets the record of past answering outcomes.
+     */
+    public void clearResults() {
+<span class="fc" id="L52">        this.successes.clear();</span>
+<span class="fc" id="L53">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L57">        return MessageFormat.format(&quot;CardStatus[card={0}, status={1}]&quot;, card, successes);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
