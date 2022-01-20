@@ -1,0 +1,22 @@
+#Thu Sep 16 23:08:01 EDT 2021
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/gamification/AllCorrectLastRound.java=1631844185268
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/gamification/AnswerCardMoreThanFiveTimes.java=1631848069685
+configuration*?=5D07DBD843C0906D04C7312032A141DEED7934B3
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/gamification/Achievement.java=1631835350521
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/ordering/repetition/CardRepeater.java=1630621318409
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/data/CardStore.java=1630621318407
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/ordering/CardDeck.java=1630621318408
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/cards/CardStatus.java=1630621318405
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/ordering/MultiOrganizer.java=1630621318408
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/ordering/prioritization/RecentMistakesFirstSorter.java=1631565066695
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/ordering/repetition/NonRepeatingCardOrganizer.java=1630621318409
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/data/CardLoader.java=1631564818512
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/data/InMemoryCardStore.java=1630621318407
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/Main.java=1631566299959
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/ordering/prioritization/MostMistakesFirstSorter.java=1630621318409
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/cli/UI.java=1631835350553
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/gamification/IncorrectCardAnswerTwiceConsecutively.java=1631846980145
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/ordering/CardOrganizer.java=1630621318408
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/ordering/prioritization/CardShuffler.java=1630621318408
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/cards/FlashCard.java=1630621318406
+/Users/lauraluk/Documents/17214/hw1-flash-cards-lauraksluk/src/main/java/edu/cmu/cs214/hw1/ordering/repetition/RepeatingCardOrganizer.java=1630621318410
