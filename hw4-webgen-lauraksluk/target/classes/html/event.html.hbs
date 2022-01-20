@@ -1,0 +1,12 @@
+{{#> website-frame}}
+    {{#if topics}}
+    <div class="topic-list">Topics: {{#each topics}}<a href="{{relPath}}{{address}}">{{title}}</a> {{/each}}</div>
+    {{/if}}
+    <div class="date">{{startDate}} -- {{endDate}}</div>
+    <div>
+        {{#each content}}
+            {{> content-fragment this }}
+        {{/each}}
+    </div>
+{{/website-frame}}
+
