@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Santorini–-17214</title>
+  <style>
+    #board {
+      display: grid;
+      grid-template-columns: auto auto auto auto auto;
+      background-color: #2196F3;
+      padding: 10px
+    }
+    .cell {
+          background-color: rgba(255, 255, 255, 0.8);
+          border: 1px solid rgba(0, 0, 0, 0.8);
+          padding: 10px;
+          font-size: 30px;
+          height: 15vmin;
+          text-align: center;
+    }
+    #bottombar {
+          height: 5vh;
+    }
+
+    #instructions {
+      height: 5vh;
+      background-color: white;
+      padding: 0px;
+      margin: 0px;
+      text-align: center;
+      border: 1px solid black;
+    }
+    #bottombar button {
+          width: 50%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          position: relative;
+          float: left;
+          font-size: 2vw
+    }
+
+  </style>
+</head>
+
+
+<body>
+  <div id="board">
+    {{#each cells}}
+    <div class="cell">{{text}}</div>
+    {{/each}}
+  </div>
+  <div id="bottombar">
+    <button>New Game</button>
+    <button>Skip Optional Build</button>
+  </div>
+
+</body>
+
+
+</html>
