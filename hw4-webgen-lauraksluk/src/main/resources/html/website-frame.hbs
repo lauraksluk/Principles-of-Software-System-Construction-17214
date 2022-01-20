@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>{{projectTitle}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" href="{{relPath}}/css/main.css"  />
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="title">{{projectTitle}}</div>
+      <div class="org">{{organization}}</div>
+      <div class="navigation">
+        {{#each headers}}<a href="{{relPath}}{{address}}">{{title}}</a> {{/each}}
+      </div>
+      {{#if breadcrumbs}}
+      <div class="breadcrumbs">
+        {{#each breadcrumbs}}<span class="breadcrumb"><a href="{{relPath}}{{address}}">{{title}}</a></span> {{/each}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="body">
+
+    <h1>{{pageTitle}}</h1>
+
+    {{> @partial-block }}
+
+
+    </div>
+    <div class="footer">by {{organization}}{{#if lastUpdated}}, last updated {{lastUpdated}}{{/if}}</div>
+
+  </body>
+  
+</html>

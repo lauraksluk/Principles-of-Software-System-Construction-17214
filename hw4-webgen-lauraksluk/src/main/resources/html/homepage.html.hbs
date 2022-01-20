@@ -1,0 +1,34 @@
+{{#> website-frame}}
+    <div class="articles">
+    <p><ul>
+      {{#each articles}}
+        <li>{{> article-preview this}}</li>
+      {{/each}}
+    </ul></p>
+    <p><a href="{{relPath}}{{articlesLink}}">(see all articles)</a></p>
+    </div>
+
+    {{#if events}}
+    <div class="events">
+    <h2>Upcoming events</h2>
+    <p><ul>
+      {{#each events}}
+        <li>{{startDate}} <a href="{{relPath}}{{address}}">{{title}}</a>
+        {{#if childEvents}}
+        <ul>{{#each childEvents}}
+            <li>{{startDate}} <a href="{{relPath}}{{address}}">{{title}}</a>
+            {{#if childEvents}}
+            <ul>{{#each childEvents}}
+                <li>{{startDate}} <a href="{{relPath}}{{address}}">{{title}}</a></li>
+                {{/each}}
+            </ul>{{/if}}
+            </li>
+            {{/each}}
+         </ul>{{/if}}
+        </li>
+      {{/each}}
+    </ul></p>
+    <p><a href="{{relPath}}{{eventsLink}}">(see all events)</a></p>
+    </div>
+    {{/if}}
+{{/website-frame}}

@@ -1,0 +1,13 @@
+    <div class="pag">
+        {{#each this.pages}}
+            <span class="pag-group">
+            {{#each this}}
+                {{#if isCurrent}}
+                    <span class="pag-link pag-active">{{title}}</span>
+                {{else}}
+                    <span class="pag-link"><a href="{{relPath}}{{address}}">{{title}}</a></span>
+                {{/if}}
+            {{/each}}
+            </span>
+        {{/each}}
+    </div>
