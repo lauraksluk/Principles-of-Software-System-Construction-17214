@@ -1,0 +1,64 @@
+.title {
+    font-size: xx-large;
+    background-color: darkred;
+    color: white;
+    font-weight: bold;
+    padding: 32px 8px 8px 8px;
+}
+
+.org {
+    font-style: italic;
+    background-color: darkred;
+    color: white;
+    font-weight: bold;
+    padding: 8px 8px 16px 8px;
+}
+
+.navigation {
+    background-color: beige;
+    padding: 8px 8px 8px 8px;
+}
+
+.breadcrumbs {
+    background-color: greenyellow;
+    padding: 8px 8px 8px 8px;
+}
+
+.footer {
+    background-color: beige;
+    padding: 8px 8px 8px 8px;
+}
+
+.header {
+    padding: 0;
+}
+
+.body {
+    padding: 8px;
+}
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+}
+
+h1 {
+    font-size: x-large;
+    color: darkred;
+}
+
+.breadcrumb:after {
+    content: ' >> ';
+}
+
+.breadcrumb:last-of-type:after {
+    content: '';
+}
+
+.pag-group:after {
+    content: ' ... ';
+}
+
+.pag-group:last-of-type:after {
+    content: '';
+}
