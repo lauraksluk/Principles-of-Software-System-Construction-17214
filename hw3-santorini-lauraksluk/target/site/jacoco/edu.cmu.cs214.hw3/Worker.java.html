@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Worker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Santorini</a> &gt; <a href="index.source.html" class="el_package">edu.cmu.cs214.hw3</a> &gt; <span class="el_source">Worker.java</span></div><h1>Worker.java</h1><pre class="source lang-java linenums">package edu.cmu.cs214.hw3;
+
+import java.util.Arrays;
+
+/**
+ * Worker class that represents each player's workers.
+ */
+public class Worker {
+    private int workerId;
+    private int[] position;
+
+    /**
+     * Constructor to create a worker.
+     * @param id worker id
+     */
+<span class="fc" id="L16">    public Worker(int id) {</span>
+<span class="fc" id="L17">        workerId = id;</span>
+<span class="fc" id="L18">        position = new int[2];</span>
+<span class="fc" id="L19">    }</span>
+
+    /**
+     * Method to get the worker's id.
+     * @return worker id
+     */
+    public int getWorkerId() {
+<span class="fc" id="L26">        return workerId;</span>
+    }
+
+    /**
+     * Method to get the position of the worker.
+     * @return [x, y] coordinate value
+     */
+    public int[] getPosition() {
+<span class="fc" id="L34">        return position;</span>
+    }
+
+    /**
+     * Method to set the position of the worker.
+     * @param x x-coordinate
+     * @param y y-coordinate
+     */
+    public void setPosition(int x, int y) {
+<span class="fc" id="L43">        position[0] = x;</span>
+<span class="fc" id="L44">        position[1] = y;</span>
+<span class="fc" id="L45">    }</span>
+
+    /**
+     * Method that overrides Java equals(); workers are considered equal if they have the same
+     * worker id, and position.
+     * @param o object to compare
+     * @return true, if o is equal to worker, false otherwise
+     */
+    @Override
+    public boolean equals(Object o) {
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (o == this) {</span>
+<span class="fc" id="L56">            return true;</span>
+        }
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (!(o instanceof Worker)) {</span>
+<span class="fc" id="L59">            return false;</span>
+        }
+<span class="fc" id="L61">        Worker w = (Worker) o;</span>
+<span class="fc" id="L62">        int[] wPos = w.getPosition();</span>
+<span class="pc bpc" id="L63" title="3 of 6 branches missed.">        return w.getWorkerId() == workerId &amp;&amp; wPos[0] == position[0]</span>
+                &amp;&amp; wPos[1] == position[1];
+    }
+
+    /**
+     * Method that overrides Java hashCode(); for equality override
+     * @return hash code
+     */
+    @Override
+    public int hashCode() {
+<span class="nc" id="L73">        return Arrays.hashCode(position);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

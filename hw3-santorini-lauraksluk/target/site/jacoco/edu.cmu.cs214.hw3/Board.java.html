@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Board.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Santorini</a> &gt; <a href="index.source.html" class="el_package">edu.cmu.cs214.hw3</a> &gt; <span class="el_source">Board.java</span></div><h1>Board.java</h1><pre class="source lang-java linenums">package edu.cmu.cs214.hw3;
+
+import java.util.List;
+
+/**
+ * Board class that represents the Santorini game board (5x5 grid).
+ * Handles the logic of building towers from blocks/dome with an integer matrix,
+ * with each board[x][y] value representing the height of the &quot;tower&quot; at (x,y).
+ */
+public class Board {
+    private static final int BOARD_WIDTH = 5;
+    private static final int BOARD_HEIGHT = 5;
+    private static final int MAX_HEIGHT = 4;
+    private static final int WIN_HEIGHT = 3;
+    private int[][] gameGrid;
+    private Worker workerJustMoved;
+
+    /**
+     * Constructor for creating a new 5x5 board.
+     */
+<span class="fc" id="L21">    public Board() {</span>
+<span class="fc" id="L22">        gameGrid = new int[BOARD_WIDTH][BOARD_HEIGHT];</span>
+<span class="fc" id="L23">    }</span>
+
+    /**
+     * Method to determine if any player won the game.
+     * @param players list of Players
+     * @return true, if a player won, false otherwise
+     */
+    public boolean winGame(List&lt;Player&gt; players) {
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        for (Player p : players) {</span>
+<span class="fc" id="L32">            List&lt;Worker&gt; workers = p.getWorkers();</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">            for (Worker w: workers) {</span>
+<span class="fc" id="L34">                int[] pos = w.getPosition();</span>
+<span class="fc" id="L35">                int x = pos[0];</span>
+<span class="fc" id="L36">                int y = pos[1];</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">                if (gameGrid[x][y] == WIN_HEIGHT) {</span>
+<span class="fc" id="L38">                    return true;</span>
+                }
+<span class="fc" id="L40">            }</span>
+<span class="fc" id="L41">        }</span>
+<span class="fc" id="L42">        return false;</span>
+    }
+
+    /**
+     * Method to determine if a player couldn't complete a move, thereby losing the game.
+     * @param players list of Players
+     * @param playerId current player
+     * @return true, if player loses, false otherwise
+     */
+    public boolean loseGameMove(List&lt;Player&gt; players, int playerId) {
+<span class="fc" id="L52">        int[] allDirections = {-1, 0, 1};</span>
+<span class="fc" id="L53">        Player currentP = players.get(playerId);</span>
+<span class="fc" id="L54">        List&lt;Worker&gt; workers = currentP.getWorkers();</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for (Worker w : workers) {</span>
+<span class="fc" id="L56">            int[] position = w.getPosition();</span>
+<span class="fc" id="L57">            int x = position[0];</span>
+<span class="fc" id="L58">            int y = position[1];</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">            for (int i = 0; i &lt; allDirections.length; i++) {</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">                for (int j = 0; j &lt; allDirections.length; j++) {</span>
+<span class="fc bfc" id="L61" title="All 4 branches covered.">                    if (i != 0 &amp;&amp; j != 0) {</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">                        if (isValidMove(players, x, y, allDirections[i], allDirections[j])) {</span>
+<span class="fc" id="L63">                            return false;</span>
+                        }
+                    }
+                }
+            }
+<span class="fc" id="L68">        }</span>
+<span class="fc" id="L69">        return true;</span>
+    }
+
+    /**
+     * Method to determine if a player couldn't complete a build, thereby losing the game.
+     * @param players list of Players
+     * @param playerId current player
+     * @param workerId current worker
+     * @return true, if player loses, false otherwise
+     */
+    public boolean loseGameBuild(List&lt;Player&gt; players, int playerId, int workerId) {
+<span class="fc" id="L80">        int[] allDirections = {-1, 0, 1};</span>
+<span class="fc" id="L81">        Player currentP = players.get(playerId);</span>
+<span class="fc" id="L82">        Worker currentW = currentP.getWorkers().get(workerId);</span>
+<span class="fc" id="L83">        int[] position = currentW.getPosition();</span>
+<span class="fc" id="L84">        int x = position[0];</span>
+<span class="fc" id="L85">        int y = position[1];</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (int i = 0; i &lt; allDirections.length; i++) {</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            for (int j = 0; j &lt; allDirections.length; j++) {</span>
+<span class="fc bfc" id="L88" title="All 4 branches covered.">                if (i != 0 &amp;&amp; j != 0) {</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">                    if (isValidBuild(players, x + allDirections[i], y + allDirections[j])) {</span>
+<span class="nc" id="L90">                        return false;</span>
+                    }
+                }
+            }
+        }
+<span class="fc" id="L95">        return true;</span>
+    }
+
+    /**
+     * Method to place both workers at the beginning of the game.
+     * @param players list of players in game
+     * @param playerId current player
+     * @param workerId worker to place
+     * @param x1 x-coordinate to place worker
+     * @param y1 y-coordinate to place worker
+     * @return true, if successfully placed, false otherwise
+     */
+    public boolean initializeWorkers(List&lt;Player&gt; players, int playerId, int workerId, int x1, int y1) {
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        if (isOccupied(players, x1, y1)) {</span>
+<span class="nc" id="L109">            throw new IllegalArgumentException(&quot;position is occupied&quot;);</span>
+        }
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">        if (!inBounds(x1, y1)) {</span>
+<span class="nc" id="L112">            return false;</span>
+        }
+<span class="fc" id="L114">        Player currentP = players.get(playerId);</span>
+<span class="fc" id="L115">        Worker worker1 = currentP.getWorkers().get(workerId);</span>
+<span class="fc" id="L116">        worker1.setPosition(x1, y1);</span>
+<span class="fc" id="L117">        return true;</span>
+    }
+
+    /**
+     * Method for a worker to build after moving.
+     * @param players list of players in game
+     * @param playerId the current player's id
+     * @param workerId the current worker's id
+     * @param x the x-coordinate to build
+     * @param y the y-coordinate to build
+     * @return true, if successful build, false otherwise
+     */
+    public boolean buildBlock(List&lt;Player&gt; players, int playerId, int workerId, int x, int y) {
+<span class="fc" id="L130">        Player currentP = players.get(playerId);</span>
+<span class="fc" id="L131">        Worker currentW = currentP.getWorkers().get(workerId);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        if (!currentW.equals(workerJustMoved)) {</span>
+<span class="fc" id="L133">            return false;</span>
+        }
+<span class="fc" id="L135">        int[] workerPosition = currentW.getPosition();</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">        if (!isAdjacent(workerPosition[0], workerPosition[1], x, y)) {</span>
+<span class="nc" id="L137">            return false;</span>
+        }
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">        if (isValidBuild(players, x, y)) {</span>
+<span class="fc" id="L140">            addBlock(x, y);</span>
+<span class="fc" id="L141">            return true;</span>
+        }
+<span class="nc" id="L143">        return false;</span>
+    }
+
+    /**
+     * Private method to determine if an attempt to build is valid.
+     * @param players list of Players
+     * @param x x-coordinate to build
+     * @param y y-coordinate to build
+     * @return true, if valid build, false otherwise
+     */
+    private boolean isValidBuild(List&lt;Player&gt; players, int x, int y) {
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">        if (!inBounds(x, y)) {</span>
+<span class="nc" id="L155">            return false;</span>
+        }
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (isOccupied(players, x, y)) {</span>
+<span class="fc" id="L158">            return false;</span>
+        }
+<span class="fc" id="L160">        int currH = getCurrentHeight(x, y);</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">        if (currH == MAX_HEIGHT) {</span>
+<span class="fc" id="L162">            return false;</span>
+        }
+<span class="pc bpc" id="L164" title="2 of 4 branches missed.">        if (0 &lt;= currH &amp;&amp; currH &lt; MAX_HEIGHT) {</span>
+<span class="fc" id="L165">            return true;</span>
+        }
+<span class="nc" id="L167">        return false;</span>
+    }
+
+    /**
+     * Private method to determine if the 2 positions, (x1,y1) and (x2,y2), are adjacent
+     * to each other.
+     * @param initialX x-coordinate of 1 position
+     * @param initialY y-coordinate of 1 position
+     * @param finalX x-coordinate of other position
+     * @param finalY y-coordinate of other position
+     * @return true if both positions are adjacent to each other, false otherwise.
+     */
+    private boolean isAdjacent(int initialX, int initialY, int finalX, int finalY) {
+<span class="pc bpc" id="L180" title="1 of 4 branches missed.">        if (initialX == finalX &amp;&amp; initialY == finalY) {</span>
+<span class="nc" id="L181">            return false;</span>
+        }
+<span class="fc" id="L183">        int delX = finalX - initialX;</span>
+<span class="fc" id="L184">        int delY = finalY - initialY;</span>
+<span class="pc bpc" id="L185" title="4 of 8 branches missed.">        return (-1 &lt;= delX &amp;&amp; delX &lt;= 1 &amp;&amp; -1 &lt;= delY &amp;&amp; delY &lt;= 1);</span>
+    }
+
+    /**
+     * Method to move a player's worker in the game.
+     * @param players list of players in the game
+     * @param playerId the player id making the move
+     * @param workerId the worker id attempting to move
+     * @param delX the amount to move in the x-direction
+     * @param delY the amount to move in the y-direction
+     * @return true if the move was valid, false otherwise
+     */
+    public boolean playMove(List&lt;Player&gt; players, int playerId, int workerId, int delX, int delY) {
+<span class="fc" id="L198">        Player currentP = players.get(playerId);</span>
+<span class="fc" id="L199">        Worker currentW = currentP.getWorkers().get(workerId);</span>
+<span class="fc" id="L200">        int[] currPos = currentW.getPosition();</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">        if (!isAdjacent(currPos[0], currPos[1], currPos[0] + delX, currPos[1] + delY)) {</span>
+<span class="nc" id="L202">            return false;</span>
+        }
+<span class="fc bfc" id="L204" title="All 2 branches covered.">        if (!isValidMove(players, currPos[0], currPos[1], delX, delY)) {</span>
+<span class="fc" id="L205">            return false;</span>
+        }
+<span class="fc" id="L207">        currentW.setPosition(currPos[0] + delX, currPos[1] + delY);</span>
+<span class="fc" id="L208">        workerJustMoved = currentW;</span>
+<span class="fc" id="L209">        return true;</span>
+    }
+
+    /**
+     * Private method to determine if (x1,y1) are in bounds of the 5x5 grid.
+     * @param x1 x-coordinate in question
+     * @param y1 y-coordinate in question
+     * @return true if in bounds, false otherwise
+     */
+    private boolean inBounds(int x1, int y1) {
+<span class="pc bpc" id="L219" title="1 of 8 branches missed.">        return 0 &lt;= x1 &amp;&amp; x1 &lt; BOARD_WIDTH &amp;&amp; 0 &lt;= y1 &amp;&amp; y1 &lt; BOARD_HEIGHT;</span>
+    }
+
+    /**
+     * Private method to determine if an attempt to move is valid.
+     * @param players list of Players
+     * @param currX current x-coordinate of worker
+     * @param currY current y-coordinate of worker
+     * @param delX amount to move in x-direction
+     * @param delY amount to move in y-direction
+     * @return true, if move is valid, false otherwise
+     */
+    private boolean isValidMove(List&lt;Player&gt; players, int currX, int currY, int delX, int delY) {
+<span class="fc bfc" id="L232" title="All 2 branches covered.">        if (!inBounds(currX + delX, currY + delY)) {</span>
+<span class="fc" id="L233">            return false;</span>
+        }
+<span class="fc bfc" id="L235" title="All 2 branches covered.">        if (isOccupied(players, (currX + delX), (currY + delY))) {</span>
+<span class="fc" id="L236">            return false;</span>
+        }
+<span class="fc" id="L238">        int currH = getCurrentHeight(currX, currY);</span>
+<span class="fc" id="L239">        int newH = getCurrentHeight(currX + delX, currY + delY);</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">        if (newH - currH &gt; 1) {</span>
+<span class="fc" id="L241">            return false;</span>
+        }
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">        if (newH == MAX_HEIGHT) {</span>
+<span class="nc" id="L244">            return false;</span>
+        }
+<span class="fc" id="L246">        return true;</span>
+    }
+
+    /**
+     * Private method that determines if there are any workers occupying the position
+     * (x,y) on the playing board.
+     * @param players the list of Players who are playing the game
+     * @param x the x-coordinate in question
+     * @param y the y-coordinate in question
+     * @return true, if occupied, false, otherwise.
+     */
+    private boolean isOccupied(List&lt;Player&gt; players, int x, int y) {
+<span class="fc bfc" id="L258" title="All 2 branches covered.">        for (Player p: players) {</span>
+<span class="fc" id="L259">            List&lt;Worker&gt; workers = p.getWorkers();</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">            for (Worker w : workers) {</span>
+<span class="fc" id="L261">                int[] wPosition = w.getPosition();</span>
+<span class="fc bfc" id="L262" title="All 4 branches covered.">                if (wPosition[0] == x &amp;&amp; wPosition[1] == y) {</span>
+<span class="fc" id="L263">                    return true;</span>
+                }
+<span class="fc" id="L265">            }</span>
+<span class="fc" id="L266">        }</span>
+<span class="fc" id="L267">        return false;</span>
+    }
+
+    /**
+     * Method that returns the current playing game grid/board.
+     * @return playing board
+     */
+    public int[][] getGameGrid() {
+<span class="fc" id="L275">        return gameGrid;</span>
+    }
+
+    /**
+     * Method that returns the number of levels/blocks the tower(grid space) at
+     * position (x,y) has.
+     * @param x x-coordinate value
+     * @param y y-coordinate value
+     * @return number of blocks on position
+     */
+    public int getCurrentHeight(int x, int y) {
+<span class="fc" id="L286">        return gameGrid[x][y];</span>
+    }
+
+    /**
+     * Method that adds 1 block to the game board grid at (x,y).
+     * If the position at (x,y) already is a complete tower, does nothing.
+     * @param x x-coordinate value
+     * @param y y-coordinate value
+     */
+    public void addBlock(int x, int y) {
+<span class="fc bfc" id="L296" title="All 2 branches covered.">        if (gameGrid[x][y] &lt; MAX_HEIGHT) {</span>
+<span class="fc" id="L297">            gameGrid[x][y] += 1;</span>
+        }
+<span class="fc" id="L299">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

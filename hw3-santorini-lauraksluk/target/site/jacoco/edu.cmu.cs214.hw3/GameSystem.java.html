@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameSystem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Santorini</a> &gt; <a href="index.source.html" class="el_package">edu.cmu.cs214.hw3</a> &gt; <span class="el_source">GameSystem.java</span></div><h1>GameSystem.java</h1><pre class="source lang-java linenums">package edu.cmu.cs214.hw3;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Main class that controls all aspects of the game; acts as a controller.
+ */
+public class GameSystem {
+    private int numPlayers;
+    private Board gameBoard;
+    private List&lt;Player&gt; players;
+    private int currPlayer;
+    private int currWorker;
+    private boolean win;
+    private boolean lose;
+
+    /**
+     * Constructor for game controller. Initializes environment.
+     */
+<span class="fc" id="L21">    public GameSystem() {</span>
+<span class="fc" id="L22">        numPlayers = 2;</span>
+<span class="fc" id="L23">        gameBoard = new Board();</span>
+<span class="fc" id="L24">        players = new ArrayList&lt;&gt;(numPlayers);</span>
+<span class="fc" id="L25">        currPlayer = 0;</span>
+<span class="fc" id="L26">        win = false;</span>
+<span class="fc" id="L27">        lose = false;</span>
+<span class="fc" id="L28">        initializePlayers();</span>
+<span class="fc" id="L29">    }</span>
+
+    /**
+     * Private method to initialize the list of players in the game.
+     */
+    private void initializePlayers() {
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        for (int i = 0; i &lt; numPlayers; i++) {</span>
+<span class="fc" id="L36">            players.add(new Player(i));</span>
+        }
+<span class="fc" id="L38">    }</span>
+
+    /**
+     * Method to place both workers in the beginning of the game. The inputted (x1,y1) and (x2,y2)
+     * must be in bounds; (0 &lt;= x1,y1,x2,y2 &lt; 5).
+     * @param x1 x-coordinate of worker1
+     * @param y1 y-coordinate of worker1
+     * @param x2 x-coordinate of worker2
+     * @param y2 y-coordinate of worker2
+     */
+    public void placeWorkers(int x1, int y1, int x2, int y2) {
+<span class="pc bpc" id="L49" title="3 of 4 branches missed.">        if (x1 == x2 &amp;&amp; y1 == y2) {</span>
+<span class="nc" id="L50">            throw new IllegalArgumentException(&quot;both positions can't be identical&quot;);</span>
+        }
+        try {
+<span class="fc" id="L53">            gameBoard.initializeWorkers(players, currPlayer, 0, x1, y1);</span>
+<span class="fc" id="L54">            gameBoard.initializeWorkers(players, currPlayer, 1, x2, y2);</span>
+<span class="fc" id="L55">            updatePlayer();</span>
+<span class="nc" id="L56">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L57">            System.out.println(e);</span>
+<span class="fc" id="L58">        }</span>
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Method for player to move. The inputted (delX, delY) must be within bounds
+     * (0 &lt;= delX, delY &lt; 5).
+     * @param workerId the worker to move
+     * @param delX the amount to move in x-direction
+     * @param delY the amount to move in y-direction
+     * @return true, if move was successful, false otherwise
+     */
+    public boolean move(int workerId, int delX, int delY) {
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (gameBoard.playMove(players, currPlayer, workerId, delX, delY)) {</span>
+<span class="fc" id="L71">            currWorker = workerId;</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">            if (gameBoard.winGame(players)) {</span>
+<span class="fc" id="L73">                win = true;</span>
+            }
+<span class="fc" id="L75">            return true;</span>
+        }
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (gameBoard.loseGameMove(players, currPlayer)) {</span>
+<span class="fc" id="L78">            lose = true;</span>
+        }
+<span class="fc" id="L80">        return false;</span>
+    }
+
+    /**
+     * Method for player to build (block/dome), after their move. The inputted (x, y) must
+     * be within bounds (0 &lt;= x, y &lt; 5).
+     * @param x x-coordinate to build
+     * @param y y-coordinate to build
+     * @return true, if build was successful, false otherwise
+     */
+    public boolean build(int x, int y) {
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (gameBoard.buildBlock(players, currPlayer, currWorker, x, y)) {</span>
+<span class="fc" id="L92">            updatePlayer();</span>
+<span class="fc" id="L93">            return true;</span>
+        }
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        if (gameBoard.loseGameBuild(players, currPlayer, currWorker)) {</span>
+<span class="nc" id="L96">            lose = true;</span>
+        }
+<span class="nc" id="L98">        return false;</span>
+    }
+
+    /**
+     * Method to get the number of players in the game.
+     * @return number of players
+     */
+    public int getNumPlayers() {
+<span class="nc" id="L106">        return numPlayers;</span>
+    }
+
+    /**
+     * Method to return the list of players in the game.
+     * @return list of players
+     */
+    public List&lt;Player&gt; getPlayers() {
+<span class="fc" id="L114">        return players;</span>
+    }
+
+    /**
+     * Method to update the current player.
+     */
+    public void updatePlayer() {
+<span class="fc" id="L121">        currPlayer = (currPlayer + 1) % numPlayers;</span>
+<span class="fc" id="L122">    }</span>
+
+    /**
+     * Method to get (index of) the current player.
+     * @return current player
+     */
+    public int getCurrPlayer() {
+<span class="fc" id="L129">        return currPlayer;</span>
+    }
+
+    /**
+     * Method to get (index of) the current worker.
+     * @return current worker
+     */
+    public int getCurrWorker() {
+<span class="fc" id="L137">        return currWorker;</span>
+    }
+
+    /**
+     * Method to get the game board/grid object.
+     * @return gameboard
+     */
+    public Board getGameBoard() {
+<span class="fc" id="L145">        return gameBoard;</span>
+    }
+
+    /**
+     * Method to get win status.
+     * @return true, if won, false otherwise
+     */
+    public boolean getWin() {
+<span class="fc" id="L153">        return win;</span>
+    }
+
+    /**
+     * Method to get lose status.
+     * @return true, if lost, false otherwise
+     */
+    public boolean getLose() {
+<span class="fc" id="L161">        return lose;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
